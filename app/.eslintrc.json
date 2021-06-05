@@ -1,0 +1,28 @@
+{
+    "plugins": [
+        "unicorn"
+    ],
+    "env": {
+        "node": true,
+        "commonjs": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "unicorn/filename-case": "error",
+        "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+        "no-prototype-builtins": "off",
+        "space-before-function-paren": ["error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
+        "key-spacing": ["error", { "align": "colon" }]
+    }
+}
