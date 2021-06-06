@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const config = require("../config/config")
+mongoose.set("debug", true)
 
 exports.connectMongo = () => {
   return mongoose.connect(config.mongodb.connectionUri, {

@@ -10,6 +10,8 @@ const { connectMongoDb } = require("./database-loader")
 // const errMiddleware = require("./../middlewares/error-middleware")
 const addUniqueRequestId = require("../middlewares/uuid-middleware")
 const appResponse = require("./../middlewares/response-middleware")
+const cron = require("../cron/cron")
+
 const {
   startProfile,
   endProfile
@@ -20,6 +22,7 @@ class ApplicationLoader {
   async bootApplication() {
     this.registerMiddleware()
     this.registerRoutes()
+    cron.cron()
     await this.bootServer()
   }
 

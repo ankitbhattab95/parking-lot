@@ -1,16 +1,16 @@
 module.exports = {
   async up(db, client) {
-    await db.createCollection("Person", {
+    await db.createCollection("User", {
       validator: {
         $jsonSchema: {
           bsonType: "object",
-          required: ["phone", "email"]
+          required: ["name", "age", "reserved"]
         }
       }
     })
   },
 
   async down(db, client) {
-    await db.collection("Person").drop()
+    await db.collection("User").drop()
   }
 }
