@@ -39,7 +39,7 @@ class ParkingService {
 
   async occupyParking(userId) {
     try {
-      return await DataService.updateOne(Parking, { userId }, { status: parkingStatus.occupyParking })
+      return await DataService.updateOne(Parking, { userId }, { status: parkingStatus.occupied })
     } catch (err) {
       throw err.errors || err
     }

@@ -5,13 +5,14 @@ const parkingStatus = require("../config/messages").status
 
 exports.cron = async () => {
   schedule("* * * * *", async () => {
+    console.log(">....cron started")
     const data = await DataService.get(Parking, {})
-    const availableParking = await DataService.get({ status: parkingStatus.available }, { _id: 1 })
+    const availableParking = await DataService.get(Parking, { status: parkingStatus.available }, { _id: 1 })
     for (let i = 0; i < data.length; i++) {
       if (data[i].bookingTime) {
         const timeDiffInMin = (Date.now() - data[i].bookingTime) / 1000 / 60
         const waitTime = getWaitTime(availableParking, data)
-
+        console.log(">.......waitTime", waitTime)
         if (timeDiffInMin > waitTime && data[i].status === parkingStatus.booked) {
           await markParkingAvailableForBooking(data, i)
         }
@@ -28,9 +29,9 @@ async function markParkingAvailableForBooking(data, i) {
 function getWaitTime(availableParking, data) {
   let waitTime = null
   if (availableParking.length <= data.length / 2) {
-    waitTime = 15
+    waitTime = 0.5// 15
   } else {
-    waitTime = 30
+    waitTime = 0.5// 30
   }
   return waitTime
 }
