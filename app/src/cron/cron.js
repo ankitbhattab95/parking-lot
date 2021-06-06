@@ -29,9 +29,9 @@ async function markParkingAvailableForBooking(data, i) {
 function getWaitTime(availableParking, data) {
   let waitTime = null
   if (availableParking.length <= data.length / 2) {
-    waitTime = 0.5// 15
+    waitTime = 15
   } else {
-    waitTime = 0.5// 30
+    waitTime = 30
   }
   return waitTime
 }
