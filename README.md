@@ -14,3 +14,5 @@
 4. **book a parking** : POST localhost:3000/api/parking/book
 5. **occupy a parking** : POST localhost:3000/api/book/parking/occupy
 
+### Note
+1. cron.js is responsible for making the parking available for booking if wait time is over

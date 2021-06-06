@@ -6,7 +6,6 @@ const parkingStatus = require("../config/messages").status
 exports.cron = async () => {
   schedule("* * * * *", async () => {
     const data = await DataService.get(Parking, {})
-    console.log(">....cron in ", data)
     const availableParking = await DataService.get({ status: parkingStatus.available }, { _id: 1 })
     for (let i = 0; i < data.length; i++) {
       if (data[i].bookingTime) {
@@ -14,13 +13,16 @@ exports.cron = async () => {
         const waitTime = getWaitTime(availableParking, data)
 
         if (timeDiffInMin > waitTime && data[i].status === parkingStatus.booked) {
-          console.log(">.....time", timeDiffInMin, data[i]._id)
-          await DataService.updateOne(Parking, { _id: data[i]._id },
-            { userId: null, bookingTime: null, status: parkingStatus.available })
+          await markParkingAvailableForBooking(data, i)
         }
       }
     }
   })
+}
+
+async function markParkingAvailableForBooking(data, i) {
+  await DataService.updateOne(Parking, { _id: data[i]._id },
+    { userId: null, bookingTime: null, status: parkingStatus.available })
 }
 
 function getWaitTime(availableParking, data) {
